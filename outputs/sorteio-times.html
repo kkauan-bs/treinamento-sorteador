@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sorteio de times</title>
+  <link rel="stylesheet" href="assets/css/sorteio-times.css">
+</head>
+<body>
+  <div class="admin-controls">
+    <button type="button" class="admin-access" id="admin-access" aria-label="Abrir login administrativo">👤</button>
+    <span class="admin-status" id="admin-status" hidden></span>
+    <button type="button" class="logout" id="main-logout" hidden>Sair</button>
+  </div>
+  <div class="modal" id="admin-modal" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+      <div class="modal-header"><h2 id="admin-title">Área administrativa</h2><button type="button" class="modal-close" id="admin-close" aria-label="Fechar área administrativa">×</button></div>
+      <form class="login-form" id="login-form">
+        <label>Usuário<input id="username" autocomplete="username" required></label>
+        <label>Senha<input id="password" type="password" autocomplete="current-password" required></label>
+        <button type="submit">Entrar</button>
+        <p class="login-error" id="login-error" role="alert" hidden></p>
+      </form>
+    </section>
+  </div>
+  <main>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Ativar modo escuro" aria-pressed="false">🌙</button>
+    <header class="heading">
+      <div class="eyebrow">Sorteio rápido</div>
+      <h1>Times aleatórios</h1>
+      <p class="subtitle">Adicione ou remova participantes e sorteie dois times</p>
+    </header>
+    <div class="section-with-control">
+      <section class="players" id="players" aria-label="Nomes dos participantes"></section>
+      <div class="player-actions"><button type="button" class="add-player" id="add-player" aria-label="Adicionar participante">+</button></div>
+    </div>
+    <div class="section-with-control">
+      <section class="teams" id="teams" aria-live="polite" aria-label="Times sorteados">
+        <article class="team">
+          <div class="team-head">
+            <h2><input class="team-name" id="team-name-1" value="Time 1" aria-label="Nome do time 1" maxlength="40"></h2>
+            <div class="team-head-actions"><span class="count" id="count-1">6 pessoas</span><button type="button" class="team-remove" aria-label="Excluir Time 1">Excluir</button></div>
+          </div>
+          <ol id="team-1"></ol>
+        </article>
+        <article class="team">
+          <div class="team-head">
+            <h2><input class="team-name" id="team-name-2" value="Time 2" aria-label="Nome do time 2" maxlength="40"></h2>
+            <div class="team-head-actions"><span class="count" id="count-2">6 pessoas</span><button type="button" class="team-remove" aria-label="Excluir Time 2">Excluir</button></div>
+          </div>
+          <ol id="team-2"></ol>
+        </article>
+      </section>
+      <div class="player-actions teams-control"><button type="button" class="add-player" id="add-team" aria-label="Adicionar time">+</button></div>
+    </div>
+    <button type="button" id="draw">Sortear times</button>
+    <p class="notice" id="notice" role="alert" hidden></p>
+    <p class="hint">Preencha os participantes que quiser; a quantidade preenchida precisa ser suficiente para formar times iguais.</p>
+  </main>
+  <script src="assets/js/sorteio-times.js" defer></script>
+</body>
+</html>
+
+
+

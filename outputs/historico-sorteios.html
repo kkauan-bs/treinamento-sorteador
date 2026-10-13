@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Histórico de sorteios</title>
+  <link rel="stylesheet" href="assets/css/historico-sorteios.css">
+</head>
+<body>
+  <main>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar modo escuro">🌙</button>
+    <div class="toolbar">
+      <a class="back" href="sorteio-times.html">← Voltar para o sorteador</a>
+      <button class="logout" id="logout" type="button">Sair</button>
+    </div>
+    <header class="heading"><div class="eyebrow">Área administrativa</div><h1>Histórico de sorteios</h1><p class="subtitle">Consulte os sorteios realizados</p></header>
+    <p class="status" id="status" role="status" aria-live="polite">Carregando...</p>
+    <section class="log-list" id="log-list" aria-live="polite"></section>
+  </main>
+  <script src="assets/js/historico-sorteios.js" defer></script>
+</body>
+</html>

@@ -35,13 +35,14 @@ O logout invalida a sessão no banco e remove o cookie.
 
 ⚠️ As credenciais padrão admin / admin123 servem somente para uso inicial local. Em produção, defina ADMIN_USER e ADMIN_PASSWORD fortes.
 
+
 🛠️ Tecnologias
 Front-end: HTML, CSS e JavaScript puro
 Back-end: Node.js
 Banco de dados: SQLite
 Autenticação: bcryptjs + cookies de sessão
 📁 Estrutura do projeto
-.
+```.
 ├── server.js                        # Servidor Node.js: autenticação, API e persistência
 ├── package.json                     # Dependências e scripts
 ├── data/
@@ -56,6 +57,7 @@ Autenticação: bcryptjs + cookies de sessão
         └── js/
             ├── sorteio-times.js         # Sorteio, times, tema, login e envio dos resultados
             └── historico-sorteios.js    # Tema, histórico, exclusão, renovação de sessão e logout
+```
 🚀 Como executar
 Pré-requisitos
 Node.js 22.13 ou superior
@@ -66,11 +68,13 @@ Instalação
 
 Na raiz do projeto:
 
+```
 bash
 npm install
 npm run dev
 npm run dev: inicia o servidor com reinicialização automática.
 npm start: inicia o servidor sem reinicialização automática.
+```
 
 Depois, acesse:
 
@@ -85,7 +89,7 @@ O banco data/sorteios.db é criado ou atualizado automaticamente ao iniciar o se
 Configurando credenciais próprias
 
 PowerShell (Windows):
-
+```
 powershell
 $env:ADMIN_USER = "seu-usuario"
 $env:ADMIN_PASSWORD = "uma-senha-forte"
@@ -97,6 +101,7 @@ bash
 export ADMIN_USER="seu-usuario"
 export ADMIN_PASSWORD="uma-senha-forte"
 npm run dev
+```
 🌐 Produção
 
 Para publicar o sistema:

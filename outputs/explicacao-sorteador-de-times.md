@@ -11,7 +11,7 @@ A aplicação é um sorteador de times com interface web, modo claro/escuro, con
 - `assets/css/sorteio-times.css`: estilos da página principal.
 - `assets/css/historico-sorteios.css`: estilos da página de histórico.
 - `assets/js/sorteio-times.js`: lógica de participantes, times, sorteio, alternância de tema, login e envio dos resultados.
-- `assets/js/historico-sorteios.js`: alternância de tema e carregamento do histórico.
+- `assets/js/historico-sorteios.js`: alternância de tema, carregamento e exclusão de registros do histórico, renovação da sessão e logout.
 - `../server.js`: servidor Node.js, autenticação, API e persistência do histórico.
 - `../package.json`: dependências e comandos do projeto.
 - `../data/sorteios.db`: banco SQLite criado automaticamente ao iniciar o servidor.
@@ -28,13 +28,15 @@ Após o sorteio, os cards dos times recebem uma animação de entrada e os parti
 
 A interface utiliza layout responsivo, cards, controles visuais e suporte a telas menores. O modo escuro é salvo no `localStorage`; a lua é exibida no modo claro e o sol no modo escuro. Mensagens de validação usam elementos visuais e `role="alert"` quando apropriado.
 
-O ícone de usuário no canto superior esquerdo abre o login administrativo. Cada abertura limpa os campos e inicia o formulário como uma nova tentativa. A janela possui botão de fechamento, foco inicial no usuário e animações suaves.
+O ícone de usuário no canto superior esquerdo abre o login administrativo quando não há sessão ativa. Depois do login, o controle indica que o administrador está conectado e permite abrir o histórico em uma nova aba. O botão “Sair” no sorteador só aparece durante uma sessão autenticada. Cada abertura do formulário limpa os campos e inicia uma nova tentativa. A janela possui botão de fechamento, foco inicial no usuário e animações suaves.
 
 ## Autenticação e histórico
 
-O login usa as credenciais iniciais `admin` / `admin123`. O servidor cria a sessão em cookie HTTP-only e redireciona o administrador para `historico-sorteios.html` após a autenticação.
+O login compara a senha com `bcryptjs` e emite um cookie de sessão `HttpOnly`, `SameSite=Lax` e `Secure` em produção. O cookie é compartilhado entre abas do mesmo site. O token aleatório não é armazenado em texto puro: o SQLite mantém seu hash na tabela `admin_sessions`, permitindo que a sessão sobreviva à reinicialização do servidor. A sessão expira após 30 minutos sem atividade e sua validade é renovada enquanto o administrador usa as páginas e APIs protegidas.
 
-A página de histórico mantém a identidade visual do sorteador, lista data e hora de cada sorteio, nomes dos times e seus participantes, além de oferecer um link de retorno ao sorteador. A API exige sessão válida para consultar os registros.
+A página de histórico só é servida a uma sessão válida; sem autenticação, o servidor redireciona para o sorteador, que abre o formulário de login. As APIs administrativas também verificam a sessão no backend. O histórico lista data e hora, nomes dos times e participantes. Cada registro pode ser excluído após confirmação; a exclusão usa identificador validado e consulta parametrizada, remove o sorteio do SQLite e apaga seus times e participantes relacionados por cascata. A lista é atualizada sem recarregar a página e mensagens informam o resultado. O registro de novos sorteios permanece disponível no fluxo público do sorteador.
+
+Há botão de logout tanto no sorteador quanto na página administrativa. O logout invalida a sessão persistida e remove o cookie. As credenciais padrão `admin` / `admin123` destinam-se somente ao uso inicial local; em produção, configure `ADMIN_USER` e `ADMIN_PASSWORD` fortes.
 
 ## Execução
 
@@ -51,9 +53,8 @@ acesse `http://localhost:3000/sorteio-times.html` ou
 `http://localhost:3000/`. O banco `data/sorteios.db` é criado ou atualizado
 automaticamente pelo servidor.
 
-O login inicial da área administrativa é `admin` / `admin123`. Para configurar
-outras credenciais no PowerShell, defina as variáveis de ambiente antes de
-iniciar o servidor:
+Para configurar credenciais próprias no PowerShell, defina as variáveis de
+ambiente antes de iniciar o servidor:
 
 ```powershell
 $env:ADMIN_USER = "seu-usuario"

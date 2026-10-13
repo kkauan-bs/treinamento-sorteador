@@ -90,6 +90,7 @@
     :root[data-theme="dark"] .admin-access:hover { background: #27324a; }
     .admin-controls { position: fixed; top: 14px; left: 14px; display: flex; align-items: center; gap: 8px; }
     .admin-controls .admin-access { position: static; margin: 0; }
+    .admin-controls button[hidden], .admin-status[hidden] { display: none; }
     .admin-status { color: #687086; font-size: .85rem; font-weight: 650; }
     .admin-controls .logout { margin: 0; padding: 8px 11px; }
     :root[data-theme="dark"] .admin-status { color: #aeb7cb; }
